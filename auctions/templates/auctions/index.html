@@ -1,0 +1,75 @@
+{% extends "auctions/layout.html" %}
+{% load templatetag %}
+{% load static %}
+
+{% block body %}
+    <div id="loading-screen">
+        <div id="loading-spinner"></div>
+    </div>
+    {% if comenting %}
+        <h1 class="comment">{{ comenting }}</h1>
+    {% endif %}
+    <h3>Active Listings</h3>
+    {% if list %}
+        <div class="container">
+            {% for x in list %}
+                <div class="listing">
+                    {% if user.is_authenticated %}
+                        <input  class="what_am_i" style="display: none;" id="{{ x.id }}">
+                    {% endif %}
+                    <div class="index-picture">
+                        <a href="{% url 'open' x.id %}">
+                            <img src="{{ x.photo }}">
+                        </a>
+                    </div>
+                    <a href="{% url 'open' x.id %}">
+                        <h3 class="header"><b>{{x.name}}</b></h3>
+                    </a>
+                    <div class="description">
+                        <p>{{x.descripte_me}}</p>
+                    </div>
+                    <div class="price-buy">
+                        <div>
+                            <h4 class="price">{{ x.bidden.first.money }} $</h4>
+                        </div>
+                        <div>
+                            <a href="{% url 'open' x.id %}">
+                                <img class="buy" src="{% static 'auctions/cart.png' %}">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h5 class="comment text-comment">There is nothing yet, but we are sure that something will appear soon.</h5>
+    {% endif %}
+    {% if ended %}
+        <h3>Ended Listings</h3>
+
+        <div class="container">
+            {% for x in ended %}
+                <div class="listing">
+                    {% if user.is_authenticated %}
+                        <input  class="what_am_i" style="display: none;" id="{{ x.id }}">
+                    {% endif %}
+                    <div class='index-picture'><a href="{% url 'open' x.id %}"><img src="{{ x.photo }}"></a></div>
+                    <a href="{% url 'open' x.id %}"><h3 class="header"><b>{{x.name}}</b></h3></a>
+                    <div class="description">
+                        <p>{{x.descripte_me}}</p>
+                    </div>
+                    <div class="price-buy">
+                        <div>
+                            <h4 class="price">{{ x.bidden.first.money }} $</h4>
+                        </div>
+                        <div>
+                            <a href="{% url 'open' x.id %}"><img class="buy" src="{% static 'auctions/cart.png' %}"></a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <script src="{% static 'js/index.js' %}">
+    </script>
+{% endblock %}

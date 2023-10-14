@@ -1,0 +1,123 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h2>Create listening</h2> 
+    <button type="button" class="btn btn-info" onclick="stars()">Change view</button><br><br>
+    
+    <div class="grid-div">
+        <div id="not_page">
+            <h3>Search view</h3>
+            
+            <div class="container">
+                    <div class="listing">
+                        <img class="watchlist" src='{% static "auctions/bookmark.png" %}' title='Add to watchlist'>
+                        
+                        <div class='index-picture'>
+                            <img id="presentation" src="https://drm2ecjli5gr8.cloudfront.net/photofunny.net/efectos/grandes/polaroidWideFrame.jpg">
+                        </div>
+
+                        <h3 class="header" id="change_me21"><b>Name of your listing</b></h3>
+                        
+                        <div class="description">
+                            <p id="change_me31">Your description</p>
+                        </div>
+                        
+                        <div class='price-buy'>
+                            <div>
+                                <h4 class="price" id="price">Start price</h4>
+                            </div>
+
+                            <div>
+                                <img class="buy" src="{% static 'auctions/cart.png' %}">
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    
+
+        <div id="page" style="display: none;">
+                <h3>Opened view</h3>
+                
+                <div class="page-creation-div">
+                    <button type="button" class="btn btn-success">Add to watchlist</button>
+                    
+                    <h1 class="header" id="change_me22">
+                        <b>Name of your listing</b>
+                    </h1>
+                    <br>
+
+                    <div class="page-grid-div">
+                        <div>
+                            <div class="creation-page-picture">
+                                <img id="presentation2" src="https://drm2ecjli5gr8.cloudfront.net/photofunny.net/efectos/grandes/polaroidWideFrame.jpg">
+                            </div>
+                        </div>
+                        <div></div>
+                        <div>
+                            <h3 class="description-full">
+                                <p id="change_me32">Your description</p>
+                            </h3>
+                        </div>
+                    
+                    </div>
+                    <div class="page-grid-div-2">
+                        <div>
+                            <h2>Listed by: {{ name }}</h2>
+                        </div>
+                        <div></div>
+                        <div>
+                            <h2>Current bid: $00.0</h2>
+                            <h2>Your bid is not the current bid!</h2>
+                        </div>
+                        <div></div>
+                        <div></div>
+                        <div class="not-owner-grid" id="bidos" class="input-group mb-3">
+                            <div>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" id="Bid" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                </div>
+                            </div>
+                            <div></div>
+                            <div>
+                                <button type="button" id="button" onclick="Bid()" class="btn btn-primary">Place bid</button>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div></div>
+        
+            <div>
+            <br><br>
+            <form class='creation-form' action="{% url 'creator' %}" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Name of listening" aria-label="Name of listing" aria-describedby="basic-addon1" oninput="named()" required>
+                </div><br>
+                <div>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name="description" placeholder="Description of listing" oninput="descripte()" rows="8" required></textarea>
+                </div><br>
+                <div>
+                    <input type="url" id="photo" name="photo" placeholder="URL of listing photo" onchange="scream()" class="form-control" aria-label="URL of listening photo" aria-describedby="basic-addon1">
+                </div><br>
+                <div>
+                    <input type="number" id="starting_price" name="starting_price" placeholder="starting price" oninput="prices()" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                </div><br>
+                <div>
+                    <input class="form-control" list="categories" name="category" type="text" id="category" placeholder="Choose category">
+                    <datalist id="categories"> 
+                        {% for x in categories %}
+                            <option>{{ x.name }}</option>
+                        {% endfor %}
+                    </datalist>
+                </div><br>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'js/creator.js' %}">
+    </script> 
+{% endblock %}
